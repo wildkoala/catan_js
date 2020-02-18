@@ -1,3 +1,9 @@
+/*
+BUG SECTION:
+  1. Printing a tile gets messed up when there's a double digit number. Need padding!
+*/
+
+
 class Player {
   constructor(name) {
     this.p_name = name;
@@ -31,11 +37,11 @@ class Card {
 }
 
 class Board {
-  constructor(brand) {
-    this.carname = brand;
+  constructor(size) {
+    this.size = size;
   }
   present() {
-    return "I have a " + this.carname;
+    console.log("This board is " + this.size + " tiles large");
   }
 }
 
@@ -55,10 +61,50 @@ class Tile {
   }
 }
 
+function roll_dice(){
+    var x = Math.floor((Math.random() * 6) + 1);
+    var y = Math.floor((Math.random() * 6) + 1);
+    return x + y;
+}
+
+// Possible resources: Ore, Wheat, Brick, Lumber, Sheep
+function random_tile(){
+  var tile_r;
+  var tile_n;
+
+  // Determine the resource
+  var x = Math.floor((Math.random() * 5) + 1); // gives random number between 1 and 5
+  if (x == 1){
+    tile_r = "O";
+  }
+  if (x == 2){
+    tile_r = "W";
+  }
+  if (x == 3){
+    tile_r = "B";
+  }
+  if (x == 4){
+    tile_r = "L";
+  }
+  if (x == 5){
+    tile_r = "S";
+  }
+
+  // Determine the number
+  tile_n = roll_dice(); 
+  while(tile_n == 7){
+    tile_n = roll_dice();
+  }
+  rand_tile = new Tile(tile_r, tile_n);
+  //return rand_tile;
+  console.log(rand_tile.present());
+}
+
+
+
 // objects do not need declaration as var (seen as a container for variables)
 my_player = new Player("WildKoala");
 //console.log(my_player.present());
-
 
 my_card = new Card("W");
 my_player.add_card(my_card);
@@ -69,7 +115,8 @@ my_player.add_card(my_card2);
 my_card3 = new Card("C");
 my_player.add_card(my_card3);
 
-my_player.show_hand();
+my_tile = random_tile();
+
 
 //my_tile = new Tile("W", 5);
 //console.log(my_tile.present());
