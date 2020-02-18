@@ -1,6 +1,7 @@
 /*
 BUG SECTION:
   1. Printing a tile gets messed up when there's a double digit number. Need padding!
+  2. Pressing Enter on option screen will automatically go to the next player's turn. Need only 0 input to end turn
 */
 
 
@@ -10,7 +11,7 @@ class Player {
     this.p_hand = []; // Gonna be an array
     this.p_color = null;
     this.p_victory_pts = null;
-    this.p_dev_cards = null;
+    this.p_dev_cards = []; // Gonna be an array
   }
   present() {
     return "My name is " + this.p_name;
@@ -23,7 +24,7 @@ class Player {
   }
   add_card(new_card){
     this.p_hand.push(new_card);
-  }  
+  }
 	//returns how many victory points a player has
   show_victory_pts() {
     return this.p_victory_pts;
@@ -105,28 +106,44 @@ function random_tile(){
 }
 
 
-var player_list = [];
+///////////////////////////
+//
+//  This is the start of the program
+//
+//////////////////////////
+
+var num_players;
+
+num_players = prompt("Press Enter the number of players\n");
+
+var player_list = [num_players];
 
 // objects do not need declaration as var (seen as a container for variables)
-player1 = new Player("Anthony");
-player2 = new Player("Twiggy");
+for (var i = 0; i < num_players; i++) {
+  var name = prompt("Please Enter Player " + (i + 1) + "'s Name");
+  player_list[i] = new Player(name);
+}
 
-player_list.push(player1);
-player_list.push(player2);
+var points_to_win;
+
+points_to_win = prompt("Press Enter the Amount of Points Required to Win\n");
 
 var winner = 0;
-var points_to_win = 10
 var current_player_turn = 0;
-var num_players = player_list.length;
 
 my_card = new Card("B");
-player1.add_card(my_card);
+player_list[0].add_card(my_card);
+player_list[0].add_card(my_card);
+player_list[0].add_card(my_card);
 
 my_card2 = new Card("L");
-player1.add_card(my_card2);
+player_list[0].add_card(my_card2);
+player_list[0].add_card(my_card2);
+player_list[0].add_card(my_card2);
+player_list[0].add_card(my_card2);
 
 my_card3 = new Card("C");
-player2.add_card(my_card3);
+player_list[0].add_card(my_card3);
 
 
 do {
@@ -152,6 +169,7 @@ function increment_player_turn() {
 }
 
 
+//Displays the options for the player to do
 function player_menu() {
   console.log(
     'Here are your options: \n' +
@@ -169,9 +187,12 @@ function player_menu() {
 
 function player_turn() {
   prompt("Press Enter to Roll Die\n");
-  console.log(roll_dice() + " has been rolled\n");
+  var roll = roll_dice();
+  console.log(roll + " has been rolled\n");
 
-  //Displays the options for the player to do
+  //Check to see if robber() is called
+  if (roll == 7)
+    robber();
 
   //Player Selects an Option
   var selection = -1;
@@ -188,9 +209,26 @@ function player_turn() {
     else if (selection == 3) {
       build_settlement(player_list[current_player_turn]);
     }
+    else if (selection == 4) {
+      build_city(player_list[current_player_turn]);
+    }
+    else if (selection == 5) {
+      build_dev_card(player_list[current_player_turn]);
+    }
   } while (selection != 0);
 }
 
+//If 7 is rolled then robber effects players with more than 7 cards and blocked tile
+function robber() {
+  console.log("Robber has been called\n");
+
+//Loop checks to see if any players have 7 or more cards
+  for (var i = 0; i < player_list.length; i++) {
+    if (player_list[i].p_hand.length >= 7) {
+      console.log(player_list[i].p_name + " Please discard half your cards");
+    }
+  }
+}
 
 /* START OF TWIGGY */
 function has_needed_resources(item, a_player){
