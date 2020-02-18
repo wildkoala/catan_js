@@ -24,6 +24,10 @@ class Player {
   add_card(new_card){
     this.p_hand.push(new_card);
   }  
+	//returns how many victory points a player has
+  show_victory_pts() {
+    return this.p_victory_pts;
+  }
 }
 
 // Card is done
@@ -101,22 +105,88 @@ function random_tile(){
 }
 
 
+var player_list = [];
 
 // objects do not need declaration as var (seen as a container for variables)
-my_player = new Player("WildKoala");
-//console.log(my_player.present());
+player1 = new Player("Anthony");
+player2 = new Player("Twiggy");
+
+player_list.push(player1);
+player_list.push(player2);
+
+// their methods can be accessed like this.
+console.log(player_list[0].show_victory_pts());
+
+var winner = 0;
+var points_to_win = 10
+var current_player_turn = 0;
+var num_players = player_list.length;
 
 my_card = new Card("W");
-my_player.add_card(my_card);
+player1.add_card(my_card);
 
 my_card2 = new Card("O");
-my_player.add_card(my_card2);
+player1.add_card(my_card2);
 
 my_card3 = new Card("C");
-my_player.add_card(my_card3);
+player2.add_card(my_card3);
 
-my_tile = random_tile();
 
+do {
+  
+  if (player_list[current_player_turn].show_victory_pts() >= points_to_win) {
+    console.log(player_list[current_player_turn].present() + " wins");
+    winner = 1;
+  }
+
+  console.log(player_list[current_player_turn].present() + " it is your turn\n");
+
+  player_turn();
+//Increments to the next player
+  increment_player_turn();
+
+  //Debug Purpose
+  //console.log(selection + "\n");
+} while(winner == 0);
+
+//Function increments who's turn it is
+function increment_player_turn() {
+  current_player_turn = (current_player_turn + 1) % num_players;
+}
+
+
+function player_menu() {
+  console.log(
+    'Here are your options: \n' +
+    '   1. View your hand \n' +
+    '   2. Buy a road \n' +
+    '   3. Buy a settlement\n' +
+    '   4. Upgrade a settlement to a city\n' +
+    '   5. Buy a development card\n' +
+    '   6. Trade with a player\n' +
+    '   7. Trade with the bank (4 for 1)\n' +
+    '   8. Trade using a port\n' +
+    '   0. End Turn\n'
+  )
+}
+
+function player_turn() {
+  prompt("Press Enter to Roll Die\n");
+  console.log(roll_dice() + " has been rolled\n");
+
+  //Displays the options for the player to do
+
+  //Player Selects an Option
+  var selection = -1;
+  do {
+    player_menu();
+    selection = prompt("Please Select One");
+
+    if (selection == 1) {
+      player_list[current_player_turn].show_hand();
+    }
+  } while (selection != 0);
+}
 
 //my_tile = new Tile("W", 5);
 //console.log(my_tile.present());
