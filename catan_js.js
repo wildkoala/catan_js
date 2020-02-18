@@ -114,18 +114,15 @@ player2 = new Player("Twiggy");
 player_list.push(player1);
 player_list.push(player2);
 
-// their methods can be accessed like this.
-console.log(player_list[0].show_victory_pts());
-
 var winner = 0;
 var points_to_win = 10
 var current_player_turn = 0;
 var num_players = player_list.length;
 
-my_card = new Card("W");
+my_card = new Card("B");
 player1.add_card(my_card);
 
-my_card2 = new Card("O");
+my_card2 = new Card("L");
 player1.add_card(my_card2);
 
 my_card3 = new Card("C");
@@ -185,8 +182,15 @@ function player_turn() {
     if (selection == 1) {
       player_list[current_player_turn].show_hand();
     }
+    else if (selection == 2) {
+      build_road(player_list[current_player_turn])
+    }
+    else if (selection == 3) {
+      build_settlement(player_list[current_player_turn]);
+    }
   } while (selection != 0);
 }
+
 
 /* START OF TWIGGY */
 function has_needed_resources(item, a_player){
@@ -332,9 +336,6 @@ function build_dev_card(a_player){
     console.log("Not enough resources to get dev card!!");
   }
 }
-
-
-
 //my_tile = new Tile("W", 5);
 //console.log(my_tile.present());
 // their methods can be accessed like this.
@@ -349,14 +350,11 @@ console.log(
  \\       /
   \\_____/`);
 /*
-
-
 function main(){
 	main_menu(num_players, points_to_win)
 	create_board(size) // Create the board itself, with tiles that have a letter for the resource and number for the probability
 	display_board(board) // Draw the board on screen
 	setup_board() // players pick their initial locations and get their resources
-
 	int winner = 0;
 	while (winner != 1){
 		player_turn()
@@ -364,7 +362,6 @@ function main(){
 	}
 	print("Player %s is the winner", player)
 }
-
 function player_turn(){
 	print("press r and hit enter to roll.")
 	int rolled;
@@ -375,16 +372,12 @@ function player_turn(){
 	else{
 		give_out_resources() // give everyone their cards
 	}
-
 	int user_response;
 	user_response = player_menu(); // show them their options now.
 	if user_response == 0{
 		show_hand(player)
 	}
-
 }
-
-
 function player_menu(){
 	print:
 		1. View your hand
@@ -396,9 +389,6 @@ function player_menu(){
 		7. Trade with the bank (4 for 1)
 		8. Trade using a port
 }
-
 function show_hand(player){}
 function robber(){}
-
-
 */
