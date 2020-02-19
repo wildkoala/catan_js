@@ -12,11 +12,7 @@ BUG SECTION:
 /* Requirements and Exports */
 var game = require('./catan_js.js');
 
-module.exports.player = Player;
-module.exports.card = Card;
-module.exports.board = Board;
-module.exports.tile = Tile;
-module.exports.random_tile = random_tile;
+
 
 class Player {
   constructor(name) {
@@ -119,3 +115,8 @@ function random_tile(){
 //console.log(module.exports);
 //module.exports = Player;
 
+module.exports.player = Player;
+module.exports.card = Card;
+module.exports.board = Board;
+module.exports.tile = Tile;
+module.exports.random_tile = random_tile;

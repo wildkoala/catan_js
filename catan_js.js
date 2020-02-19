@@ -17,7 +17,7 @@ var my_classes = require('./classes.js');
 var items = require('./build_items.js');
 var standard_input = process.stdin;
 
-module.exports.roll_dice = roll_dice;
+
 
 // Set input character encoding.
 standard_input.setEncoding('utf-8');
@@ -241,3 +241,4 @@ How do i
 
 */
 
+module.exports.roll_dice = roll_dice;
