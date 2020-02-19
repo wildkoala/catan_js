@@ -6,6 +6,13 @@ FILE PURPOSE:
 
 // POSSIBLE RESOURCES: Ore, Wheat, Brick, Lumber, Sheep
 
+/* Requirements and Exports */
+module.exports.has_needed_resources = has_needed_resources;
+module.exports.build_dev_card = build_dev_card;
+module.exports.build_city = build_city;
+module.exports.build_settlement = build_settlement;
+module.exports.build_road = build_road;
+
 // partially implemented
 function build_road(a_player){
   var have_resources = has_needed_resources("road", a_player);

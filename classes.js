@@ -4,6 +4,20 @@ FILE PURPOSE:
   the created classes.
  */
 
+ /*
+BUG SECTION: 
+  1. showing a tile needs to have a point at the top, not an edge
+ */
+
+/* Requirements and Exports */
+var game = require('./catan_js.js');
+
+module.exports.player = Player;
+module.exports.card = Card;
+module.exports.board = Board;
+module.exports.tile = Tile;
+module.exports.random_tile = random_tile;
+
 class Player {
   constructor(name) {
     this.p_name = name;
@@ -13,7 +27,7 @@ class Player {
     this.p_dev_cards = []; 
   }
   present() {
-    return "My name is " + this.p_name;
+    console.log("My name is " + this.p_name);
   }
   show_hand(){
     var i;
@@ -89,11 +103,19 @@ function random_tile(){
   }
 
   // Determine the number, 7's not allowed
-  tile_n = roll_dice(); 
+  tile_n = game.roll_dice(); 
   while(tile_n == 7){
-    tile_n = roll_dice();
+    tile_n = game.roll_dice();
   }
   rand_tile = new Tile(tile_r, tile_n);
   //return rand_tile;
   console.log(rand_tile.present());
 }
+
+//console.log(module.filename);
+//console.log(module.id);
+
+
+//console.log(module.exports);
+//module.exports = Player;
+

@@ -9,8 +9,18 @@ FILE PURPOSE:
 BUG SECTION:
   1. Printing a tile gets messed up when there's a double digit number. Need padding!
   2. Pressing Enter on option screen will automatically go to the next player's turn. Need only 0 input to end turn
-*/
+  3. "prompt" needs to be used properly, using the .start() method.
+  */
 
+/* Requirements and Exports */
+var my_classes = require('./classes.js');
+var items = require('./build_items.js');
+var standard_input = process.stdin;
+
+module.exports.roll_dice = roll_dice;
+
+// Set input character encoding.
+standard_input.setEncoding('utf-8');
 
 /* FUNCTION DECLARATIONS */
 
@@ -42,7 +52,9 @@ function player_menu() {
 }
 
 function player_turn() {
-  prompt("Press Enter to Roll Die\n");
+
+  
+  //prompt("Press Enter to Roll Die\n");
   var roll = roll_dice();
   console.log(roll + " has been rolled\n");
 
@@ -74,16 +86,6 @@ function player_turn() {
   } while (selection != 0);
 }
 
-function robber() {
-  console.log("Robber has been called\n");
-
-//Loop checks to see if any players have 7 or more cards
-  for (var i = 0; i < player_list.length; i++) {
-    if (player_list[i].p_hand.length >= 7) {
-      console.log(player_list[i].p_name + " Please discard half your cards");
-    }
-  }
-}
 
 ///////////////////////////
 //
@@ -98,6 +100,21 @@ var num_players;
 num_players = prompt("Press Enter the number of players\n");
 
 var player_list = [num_players];
+
+
+// the why robber() is written, it is dependent on player_list being defined
+// in the global scope. So it must be placed after the player_list definition
+// in the code and makes it kind of messy. Maybe should take a player_list argument?
+function robber() {
+  console.log("Robber has been called\n");
+
+//Loop checks to see if any players have 7 or more cards
+  for (var i = 0; i < player_list.length; i++) {
+    if (player_list[i].p_hand.length >= 7) {
+      console.log(player_list[i].p_name + " Please discard half your cards");
+    }
+  }
+}
 
 // objects do not need declaration as var (seen as a container for variables)
 for (var i = 0; i < num_players; i++) {
@@ -207,5 +224,20 @@ function player_menu(){
 }
 function show_hand(player){}
 function robber(){}
+
+We need to figure out how we're going to describe where people want to place their roads and where they want to place their settlements
+I think we should specify which corners of a tile are open with "O" for open.
+I think we need some colors in this game, even though its a terminal... can we do that? 
+How else will we specify who has a corner? Is the first letter of the player name okay? What if there are two players with the same name?
+Wouldn't that be confusing with the resources?
+
+What will clients send?
+
+How do i draw multiple tiles? I think I might just have 2 defined board sizes, and just populate the board randomly at the start of the game.
+
+
+How do i 
+
+
 */
 
